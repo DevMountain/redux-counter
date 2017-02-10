@@ -70,12 +70,16 @@ export default createStore( counter );
 Now that we have a Redux store we need to make our application aware that it exists and connect relevant components.
 
 **Instructions**
+<!-- This needs to be two sentences -->
+<!-- ? React-Redux or `react-redux`? Both are used in the same context in this README -->
 Make the application aware of our Redux store using the `Provider` component from React-Redux, connect the `App` component to Redux.
 
 **Detailed Instructions**
-
+<!-- Wrap the `App` component in a `Provider` component -->
+<!-- component. Pass `store` as a prop to `Provider`. -->
 Begin in the root of application at `src/index.js` by importing the `Provider` component from React-Redux and `store` from `src/store.js`. Wrap `App` in the `Provider` component, passing `store` as a prop to `Provider`. This will make our application aware of the Redux store and allow us to gain access to data.
 
+<!-- ? `App` component is used here to talk about the `App` class. Where `Provider` component up in the paragraph previous to this is used to referent the JSX. Is there way we could differentiate the two? -->
 Open up `src/App.js` so we can connect `App` to our application's state. To do this we first need to import the aptly named `connect` function from `react-redux`. Then, underneath your `App` component, create a function `mapStateToProps` that takes a parameter `state`. This function will tell `connect` which pieces of application state we're interested in. Right now we want all of it, so just return `state`.
 
 Using `connect` we are going to "decorate" our component, which is a fancy way of saying that we are going to let it do things it wasn't able to before, such as access data in Redux. To do this we need to first create our decorator by invoking `connect` and passing in `mapStateToProps`. Once our decorator is created we need to invoke it and pass in `App`, exporting the result by default. This is a little confusing at first, so check out the example below!
@@ -171,14 +175,17 @@ export default connect( mapStateToProps )( App );
 Now that our application is talking to Redux we need to set up Redux to actually do the things we want it to do. We'll start by creating action types, creating action creators, and implementing increment/decrement logic.
 
 **Instructions**
-
+<!-- This comma series is hard to read. Splitting into three sentences could clear things up. -->
 Create  `INCREMENT` and `DECREMENT` action types, write corresponding action creator functions `increment` and `decrement`, which take an `amount` parameter, and update the reducer to process these actions into state changes.
 
 **Detailed Instructions**
 
 We currently have state, but no way to do anything with it. To be able to access that data we first need to create some action types. Action types describe to our reducer (`counter`) what has occurred when Redux receives an action. We'll start with two action types, each stored in its own variable. Create a variable named `INCREMENT` and set it equal to the string `"INCREMENT"`,  and a variable named `DECREMENT` set equal to the string `"DECREMENT"`. We use all capital names here to indicate that these values are constants that will never be altered by the application.
 
-Following action types comes the action creators. In Redux, actions are plain objects containing a type (describing what happened) and any data that might be necessary to the action. Our first action creator will be a function named `increment` that takes in a parameter of `amount`. The function then returns an object with two properties: `amount` - set equal to the `amount` parameter, and `type` set equal to the `INCREMENT` action type.  Create a `decrement` function that mimics `increment`, the only difference being that `type` should now be equal to `DECREMENT`. Export both of these functions.
+Following action types comes the action creators. In Redux, actions are plain objects containing a type (describing what happened) and any data that might be necessary to the action. Our first action creator will be a function named `increment` that takes in a parameter of `amount`.
+
+<!-- This sentence needs to be cleaned up a bit -->
+The function then returns an object with two properties: `amount` - set equal to the `amount` parameter, and `type` set equal to the `INCREMENT` action type.  Create a `decrement` function that mimics `increment`, the only difference being that `type` should now be equal to `DECREMENT`. Export both of these functions.
 
 The last change we'll be making in our `counter.js` file will be updating the reducer to handle these actions. It is a core concept of Redux and state management that state is never mutated, meaning you should never say `state.currentValue++`. This means that each time `counter` is called we need to return a **new** state object from the action and values from the current state **without** changing the current state.
 
@@ -229,7 +236,8 @@ export function decrement( amount ) {
 Now that we can effectively manage application state we need to wire up the `App` component so that it can dispatch actions to our reducer.
 
 **Instructions**
-
+<!-- props, and attach -->
+<!-- OR separate sentences -->
 Import the `increment` and `decrement` action creators to `App`, use `connect`'s `mapDispatchToProps` to place the action creators on props, attach the action creators to the appropriate buttons.
 
 **Detailed Instructions**
@@ -253,6 +261,7 @@ You should now be able to interact with all of the increment and decrement butto
 
 <summary>`src/App.js`</summary>
 
+<!-- redo and undo are not yet defined here -->
 ```jsx
 import React, { Component } from "react";
 import { connect } from "react-redux";
@@ -349,6 +358,7 @@ Create two new action types, `UNDO` and `REDO`, as well as their corresponding a
 
 **Detailed Instructions**
 
+<!-- The second sentence here needs to be restructured. -->
 Open up `src/ducks/counter.js`. Beneath the other actions create two more - `UNDO`, set equal to `"UNDO"`, and `REDO`, set equal to `"REDO"`. Create corresponding action creators `undo` and `redo` alongside your other action creators. Because we will already have all the data we need on `state`, the actions returned by these action creators only need to have a `type` property. Change the `initialState` variable by adding two properties - `futureValues` and `previousValues`, both set to empty arrays.
 
 Because we changed how `initialState` looks we need to update how we handle existing actions before adding handlers for the new ones. Adjust both the `INCREMENT` and `DECREMENT` cases so that they return an object that looks something like this:
@@ -559,15 +569,15 @@ export default connect( mapStateToProps, { decrement, increment, redo, undo } )(
 
 ### Contributions
 
-#### 
- 
+####
+
 If you see a problem or a typo, please fork, make the necessary changes, and create a pull request so we can review your changes and merge them into the master repo and branch.
 
 ## Copyright
 
 ### Copyright
 
-#### 
+####
 
 © DevMountain LLC, 2017. Unauthorized use and/or duplication of this material without express and written permission from DevMountain, LLC is strictly prohibited. Excerpts and links may be used, provided that full and clear credit is given to DevMountain with appropriate and specific direction to the original content.
 
